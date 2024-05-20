@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="plantilla/template :: head"></head>
+<body>
+<header th:replace="plantilla/template :: header"></header>
+<div class="container">
+    <h1>REALIZAR PEDIDO</h1>
+    <form th:action="@{/views/productos/pedido}" th:object="${pedidoForm}" method="post">
+        <div class="form-group">
+            <label for="producto">Selecciona un producto:</label>
+            <select id="producto" name="productoId" class="form-control" th:field="*{productoId}">
+                <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.producto}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad:</label>
+            <select id="cantidad" name="cantidad" class="form-control" th:field="*{cantidad}">
+                <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Realizar Pedido</button>
+    </form>
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${pedidoRealizado}">
+        <h2>Ticket del Pedido</h2>
+        <p>Producto: <span th:text="${producto.producto}"></span></p>
+        <p>Cantidad: <span th:text="${cantidad}"></span></p>
+        <p>Precio Total: $<span th:text="${precioTotal}"></span></p>
+    </div>
+</div>
+<footer th:replace="plantilla/template :: footer"></footer>
+</body>
+</html>
+

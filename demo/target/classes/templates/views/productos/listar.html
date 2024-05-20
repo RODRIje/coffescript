@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="plantilla/template :: head"></head>
+<body>
+
+    <header th:replace="plantilla/template :: header"></header>
+
+    <div class="container">
+        <h1 th:text="${titulo}"></h1>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="produc:${productos}">
+                <th scope="row" th:text="${produc.id}"></th>
+                <td th:text="${produc.producto}"></td>
+                <td th:text="${produc.precio}"></td>
+                <td th:text="${produc.cantidad}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer th:replace="plantilla/template :: footer"></footer>
+
+</body>
+</html>
