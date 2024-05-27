@@ -1,23 +1,22 @@
 package com.tiendacafe.demo.Entity;
 
 public class PedidoForm {
-    private Long productoId;
-    private int cantidad;
+    private List<Long> productoIds;
+    private List<Integer> cantidades;
 
-    // Getters y Setters
-    public Long getProductoId() {
-        return productoId;
+    public List<Long> getProductoIds() {
+        return productoIds;
     }
 
-    public void setProductoId(Long productoId) {
-        this.productoId = productoId;
+    public void setProductoIds(List<Long> productoIds) {
+        this.productoIds = productoIds;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public List<Integer> getCantidades() {
+        return cantidades;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidades(List<Integer> cantidades) {
+        this.cantidades = cantidades;
     }
 }
