@@ -19,7 +19,7 @@ public class ProductoController {
     @Autowired
     private IProductoService iProductoService;
 
-    @GetMapping("/")
+    @GetMapping("/listar")
     public String listarProductos(Model model){
         List<Producto> listarProductos = iProductoService.findAll();
 
