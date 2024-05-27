@@ -1,5 +1,7 @@
 package com.tiendacafe.demo.Entity;
 
+import java.util.List;
+
 public class PedidoForm {
     private List<Long> productoIds;
     private List<Integer> cantidades;
