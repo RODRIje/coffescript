@@ -30,23 +30,28 @@ public class ProductoController {
 
     @PostMapping("/pedido")
     public String realizarPedido(PedidoForm pedidoForm, Model model) {
-        Producto producto = iProductoService.findById(pedidoForm.getProductoId());
+        List<Producto> productos = new ArrayList<>();
+        List<Integer> cantidades = pedidoForm.getCantidades();
+        double precioTotal = 0;
 
-        if (producto == null) {
-            model.addAttribute("error", "Producto no encontrado.");
-            return "home";
+        for (int i = 0; i < pedidoForm.getProductoIds().size(); i++) {
+            Long productoId = pedidoForm.getProductoIds().get(i);
+            Integer cantidad = pedidoForm.getCantidades().get(i);
+
+            Producto producto = iProductoService.findById(productoId);
+            if (producto.getCantidad() < cantidad) {
+                model.addAttribute("error", "No hay suficiente stock para el producto: " + producto.getProducto());
+                return "home";
+            }
+
+            iProductoService.descontarStockById(productoId, cantidad);
+            productos.add(producto);
+            precioTotal += producto.getPrecio() * cantidad;
         }
 
-        boolean success = iProductoService.descontarStockById(pedidoForm.getProductoId(), pedidoForm.getCantidad());
-
-        if (!success) {
-            model.addAttribute("error", "No hay suficiente stock para el producto seleccionado.");
-            return "home";
-        }
-
-        model.addAttribute("producto", producto);
-        model.addAttribute("cantidad", pedidoForm.getCantidad());
-        model.addAttribute("precioTotal", producto.getPrecio() * pedidoForm.getCantidad());
+        model.addAttribute("productos", productos);
+        model.addAttribute("cantidades", cantidades);
+        model.addAttribute("precioTotal", precioTotal);
         model.addAttribute("pedidoRealizado", true);
 
         return "home";
